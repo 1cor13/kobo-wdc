@@ -19,7 +19,6 @@
 
 var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-
 function getDataForSchema(_userInputs) {
   return new Promise(function(resolve, reject) {
     $.ajax({
@@ -219,7 +218,7 @@ function getTypeOfPromise(uniqueVar, data) {
         //(cols)
         var tableSchema = {
           id: "kobo",
-          alias: "My Kobo Connector Data",
+          alias: "HEPS-DMT-Connector",
           columns: cols
         };
         schemaCallback([tableSchema]);
@@ -249,23 +248,13 @@ function getTypeOfPromise(uniqueVar, data) {
   // Create event listeners for when the user submits the form
   $(document).ready(function() {
     $("#koboForm").on("submit", function(e) {
-      // //('Connection iniate buttion click')
       e.preventDefault();
-      // var formData = $("#koboForm").serializeFormJSON();
-      var formData = {}
-      if($('#_type').val() == 'other'){
-        formData.url = $('#custom_url').val();
-        formData.auth = '';
+      
+      var formData = {
+        url: 'https://kc.humanitarianresponse.info/api/v1/data/617531',
+        auth: '0da0f48ab874d7655de692db6d3100822983032a'
+      };
 
-      }else if($('#_type').val() == 'other_kobo'){
-        formData.url = $('#url').val();
-        formData.auth = $('#auth').val();
-      }else{
-        formData.url = $('#url').val();
-        formData.auth = $('#auth').val();
-      }
-      // formData.url = ($('#_type').val() =)
-      //(formData)
       getDataForSchema(formData).then(function(a){console.log(a)}).catch(function(e){console.log(e)})
       tableau.connectionData = JSON.stringify(formData);
       tableau.connectionName = "Kobo Form"; // This will be the data source name in Tableau

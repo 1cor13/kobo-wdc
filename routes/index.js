@@ -8,6 +8,8 @@ var csrfProtection = csrf({ cookie: true })
 /* GET home page. */
 router.get('/', csrfProtection, function(req, res, next) {
   res.render('index', { csrfToken: req.csrfToken() });
+
+  
 });
 /* GET home page. */
 router.post('/add', csrfProtection, async (req, res)=> {
