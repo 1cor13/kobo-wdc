@@ -35,8 +35,8 @@ function getDataForSchema(_userInputs) {
       })
     })
       .done(function(data) {
-        //(data);
-        resolve(data);
+        var cleanerData = data.filter(record => record.date > "2021-01-26"); // all data before 2021-01-26 is dirty
+        resolve(cleanerData);
       })
       .fail(function(e) {
         //(e);
@@ -255,7 +255,13 @@ function getTypeOfPromise(uniqueVar, data) {
         auth: '0da0f48ab874d7655de692db6d3100822983032a'
       };
 
-      getDataForSchema(formData).then(function(a){console.log(a)}).catch(function(e){console.log(e)})
+      getDataForSchema(formData)
+        .then(function(a){
+          console.log(a)
+        })
+        .catch(function(e){
+          console.log(e)
+        })
       tableau.connectionData = JSON.stringify(formData);
       tableau.connectionName = "Kobo Form"; // This will be the data source name in Tableau
       tableau.submit(); // This sends the connector object to Tableau
